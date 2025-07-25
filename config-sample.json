@@ -1,0 +1,14 @@
+{
+  "sourceRepo": "/path/to/private/company/repo",
+  "targetRepo": "/path/to/private/personal/repo",
+  "branch": "main",
+  "sourceAuthors": [
+    "alice@example.com",
+    "alice.lastname@example.com",
+    "alicel@example.com"
+  ],
+  "targetAuthor": {
+    "name": "Alice Lastname",
+    "email": "alice.public@example.net"
+  }
+}
