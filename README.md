@@ -27,25 +27,20 @@ It's fake activity with real integrity.
   - Zero-diff commits
   - Commits by all other authors
 
-## Configuration
+## Installation
 
-Save a copy of `config-sample.json` as `config.json` file in this project:
+Clone the repository:
 
-```json
-{
-  "sourceRepo": "/path/to/private/company/repo",
-  "targetRepo": "/path/to/private/personal/repo",
-  "branch": "main",
-  "sourceAuthors": [
-    "alice@example.com",
-    "alice.lastname@example.com",
-    "alicel@example.com"
-  ],
-  "targetAuthor": {
-    "name": "Alice Lastname",
-    "email": "alice.public@example.net"
-  }
-}
+```bash
+git clone https://github.com/blzaugg/ghost-git-activity.git
+cd ghost-git-activity
+```
+
+Then copy and configure your config.json:
+
+```bash
+cp config-sample.json config.json
+# edit config.json to match your repo paths and author settings
 ```
 
 ## Usage
