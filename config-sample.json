@@ -1,14 +1,12 @@
 {
-  "sourceRepo": "/path/to/private/company/repo",
-  "targetRepo": "/path/to/private/personal/repo",
-  "branch": "main",
-  "sourceAuthors": [
+  "repoPathSource": "/path/to/company/repo",
+  "repoPathTarget": "/path/to/personal/repo",
+  "branchName": "main",
+  "commitAuthorEmailsSource": [
     "alice@example.com",
     "alice.lastname@example.com",
     "alicel@example.com"
   ],
-  "targetAuthor": {
-    "name": "Alice Lastname",
-    "email": "alice.public@example.net"
-  }
+  "commitAuthorNameTarget": "Alice Lastname",
+  "commitAuthorEmailTarget": "alice.public@example.net"
 }
