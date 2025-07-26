@@ -8,28 +8,34 @@ Useful for showing Git contribution activity without:
 - Leaking proprietary information
 - Breaking NDAs
 
-It's fake activity with real integrity.
+It's mirrored activity with integrity.
 
 ## What It Does
 
-- Scans commits from a local source repo and branch.
+- Scans commits from a local source repository and branch.
 - Filters commits by a list of authors.
-- Creates matching shadow commits in a local target repo:
+- Creates matching shadow commits in a local target repository:
   - Preserves original **timestamp**
-  - Matches **line additions/deletions** into a single file (`shadow-activity.log`)
-  - All commits attributed to a single **public author**
+  - Matches **line insertions/deletions** into a single file (`shadow-activity.log`)
+  - All commits attributed to a single **author**
   - Commit message format:
     ```
-    <original-short-sha> <ISO timestamp> +<adds> -<deletes> <original author>
+    <original-short-sha> <ISO timestamp> +<insertions> -<deletions> <original author>
     ```
 - Skips:
   - Merge commits
   - Zero-diff commits
   - Commits by all other authors
 
-## Installation
+## Installation & Setup
 
-Clone the repository:
+Init a new repository to contain your `shadow-activity.log`:
+
+```bash
+git init shadow-git-activity-artifact
+```
+
+Clone this project:
 
 ```bash
 git clone https://github.com/blzaugg/shadow-git-activity.git
@@ -40,7 +46,7 @@ Then copy and configure your config.json:
 
 ```bash
 cp config-sample.json config.json
-# edit config.json to match your repo paths and author settings
+# edit config.json to match your repository paths and author settings
 ```
 
 ## Usage
@@ -49,7 +55,7 @@ cp config-sample.json config.json
 # Simulate and preview the shadow commits (no changes made)
 node shadow.js --dry-run
 
-# Create shadow commits in the target repo
+# Create shadow commits in the target repository
 node shadow.js
 
 # Resume after a failed run (skips previously mirrored commits)
