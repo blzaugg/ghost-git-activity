@@ -1,6 +1,6 @@
-# ghost-git-activity
+# shadow-git-activity
 
-A Node.js tool to replay commit metadata from one private Git repository into another dummy private repository.
+A Node.js tool to shadow Git commit activity from a source repository into a target repository.
 
 Useful for showing Git contribution activity without:
 
@@ -12,11 +12,11 @@ It's fake activity with real integrity.
 
 ## What It Does
 
-- Scans commits from a local Git repo and branch.
-- Filters by a list of authors.
-- Creates matching dummy commits in a second repo:
+- Scans commits from a local source repo and branch.
+- Filters commits by a list of authors.
+- Creates matching shadow commits in a local target repo:
   - Preserves original **timestamp**
-  - Matches **line additions/deletions** in a single file (`dummy.txt`)
+  - Matches **line additions/deletions** into a single file (`shadow-activity.log`)
   - All commits attributed to a single **public author**
   - Commit message format:
     ```
@@ -32,8 +32,8 @@ It's fake activity with real integrity.
 Clone the repository:
 
 ```bash
-git clone https://github.com/blzaugg/ghost-git-activity.git
-cd ghost-git-activity
+git clone https://github.com/blzaugg/shadow-git-activity.git
+cd shadow-git-activity
 ```
 
 Then copy and configure your config.json:
@@ -46,17 +46,17 @@ cp config-sample.json config.json
 ## Usage
 
 ```bash
-# Simulate and preview the dummy commits (no changes made)
-node ghost.js --dry-run
+# Simulate and preview the shadow commits (no changes made)
+node shadow.js --dry-run
 
-# Create dummy commits in the target repo
-node ghost.js
+# Create shadow commits in the target repo
+node shadow.js
 
 # Resume after a failed run (skips previously mirrored commits)
-node ghost.js --resume
+node shadow.js --resume
 
 # Combine resume + dry-run
-node ghost.js --dry-run --resume
+node shadow.js --dry-run --resume
 ```
 
 ## Output Example (`dryrun.txt`)
@@ -80,7 +80,7 @@ No external npm packages. Uses raw `git` via Node’s `child_process`.
 ## File Structure
 
 ```
-ghost.js            # Main script
+shadow.js           # Main script
 config.json         # Required configuration file
 config-sample.json  # Sample configuration file
 dryrun.txt          # Output in dry-run mode
