@@ -57,6 +57,9 @@ node shadow.js --resume
 
 # Combine resume + dry-run
 node shadow.js --dry-run --resume
+
+# Print debug information
+node shadow.js --debug
 ```
 
 ## Output Example (`dry-run.log`)
