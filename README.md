@@ -59,7 +59,7 @@ node shadow.js --resume
 node shadow.js --dry-run --resume
 ```
 
-## Output Example (`dryrun.txt`)
+## Output Example (`dry-run.log`)
 
 ```
 a1b2c3d 2025-07-16T14:22:33+00:00 +15 -3 Alice Lastname
@@ -83,7 +83,7 @@ No external npm packages. Uses raw `git` via Node’s `child_process`.
 shadow.js           # Main script
 config.json         # Required configuration file
 config-sample.json  # Sample configuration file
-dryrun.txt          # Output in dry-run mode
+dry-run.log         # Output in dry-run mode
 ```
 
 ## Author

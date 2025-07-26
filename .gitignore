@@ -14,6 +14,3 @@ node_modules/
 
 # Local Config
 config.json
-
-# Debug Artifacts
-dryrun.txt
