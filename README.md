@@ -87,7 +87,6 @@ No external npm packages. Uses raw `git` via Node’s `child_process`.
 shadow.js           # Main script
 config.json         # Required configuration file
 config-sample.json  # Sample configuration file
-dry-run.log         # Output in dry-run mode
 ```
 
 ## Author
