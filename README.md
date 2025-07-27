@@ -1,6 +1,7 @@
 # shadow-git-activity
 
-A Node.js tool to shadow Git commit activity from a source repository into a target repository.
+A Node.js tool to shadow Git commit activity from a source repository into a
+target repository.
 
 Useful for showing Git contribution activity without:
 
@@ -9,6 +10,19 @@ Useful for showing Git contribution activity without:
 - Breaking NDAs
 
 It's mirrored activity with integrity.
+
+# What Problem Is This Solving?
+
+I found it disappointing that when I contributed to a company repo on
+another hosting platform, or using a dedicated company GitHub account, those
+contributions didn't show up on the "All Mighty GitHub Contribution Graph".
+
+I get it, GitHub activity shouldn't be treated as measure of a developer's
+actual output. But unconscious biases exist, and that graph does influence how
+people perceive your value as a developer.
+
+This project itself is proof enough that you cannot rely on the GitHub
+Contribution Graph to acuate represent development activity.
 
 ## What It Does
 
@@ -24,6 +38,7 @@ Init a new repository to contain your `shadow-activity.log`:
 
 ```bash
 git init shadow-git-activity-artifact
+# Or whatever you want to call it
 ```
 
 Clone this project:
