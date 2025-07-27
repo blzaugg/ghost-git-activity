@@ -175,16 +175,16 @@ function getCommitsDataFromRepoSource() {
   const commitLog = runGit(config.repoPathSource, `log ${config.branchName} --reverse --pretty=format:"${prettyFormat}"`);
   const logLines = commitLog.trim().split("\n");
 
-  if (debug) {
-    console.log("DEBUG: Commit Log lines:");
+  // if (debug) {
+  //   console.log("DEBUG: Commit Log lines:");
 
-    const unitSeparatorRegEx = new RegExp(unitSeparatorString, "g");
-    logLines.forEach((logLine) => {
-      console.log(`- ${logLine.replaceAll(unitSeparatorRegEx, " ")}`);
-    });
+  //   const unitSeparatorRegEx = new RegExp(unitSeparatorString, "g");
+  //   logLines.forEach((logLine) => {
+  //     console.log(`- ${logLine.replaceAll(unitSeparatorRegEx, " ")}`);
+  //   });
 
-    console.log("");
-  }
+  //   console.log("");
+  // }
 
   return logLines.map((logLine) => {
       const [commitShaSource, commitAuthorEmailSource, commitAuthorDateSource] = logLine.split(unitSeparatorString);
@@ -300,13 +300,6 @@ async function main() {
 
   if (debug) {
     console.log("DEBUG: Commits data from repo source:", commitsDataFromRepoSource.length);
-
-    commitsDataFromRepoSource.forEach(({ commitShaSource, commitAuthorEmailSource, commitAuthorDateSource }) => {
-      console.log(`- commitShaSource: ${commitShaSource}`);
-      console.log(`- commitAuthorEmailSource: ${commitAuthorEmailSource}`);
-      console.log(`- commitAuthorDateSource: ${commitAuthorDateSource}`);
-      console.log("");
-    });
   }
 
   if (commitsDataFromRepoSource.length === 0) {
@@ -401,11 +394,6 @@ async function main() {
     // "<original-sha> <ISO timestamp> +<insertions> -<deletions> <original author>"
     // "89532a8 2024-09-30T19:40:22-07:00 +176 -2 alice.public@example.net"
     const commitMessage = `${commitShaSource} ${commitAuthorDateSource} +${commitInsertions} -${commitDeletions} ${commitAuthorEmailSource}`;
-
-    if (debug) {
-      console.log(`DEBUG: Commit message: ${commitMessage}`);
-      console.log("");
-    }
 
     if (dryRun) {
       console.warn(`[dry-run] Created shadow commit: ${commitMessage}`);
