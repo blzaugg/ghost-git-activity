@@ -11,6 +11,8 @@ Useful for showing Git contribution activity without:
 
 It's mirrored activity with integrity.
 
+![Before & after screenshots of the GitHub Contribution Graph](./assets/before-and-after.png)
+
 # What Problem Is This Solving?
 
 I found it disappointing that when I contributed to a company repo on
