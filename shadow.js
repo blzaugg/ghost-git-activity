@@ -5,7 +5,6 @@ const fs = require("fs");
 const path = require("path");
 
 const PATH_CONFIG = path.resolve(process.cwd(), "config.json");
-const PATH_DRY_RUN_LOG = path.resolve(process.cwd(), "dry-run.log");
 const FILENAME_SHADOW_LOG = "shadow-activity.log";
 
 // ================================
@@ -354,17 +353,6 @@ async function main() {
     console.log("");
   }
 
-  // Prep dry-run log
-  let dryRunLog = [];
-  if (dryRun && fs.existsSync(PATH_DRY_RUN_LOG)) {
-    fs.unlinkSync(PATH_DRY_RUN_LOG);
-
-    if (debug) {
-      console.log(`DEBUG: ${PATH_DRY_RUN_LOG} deleted for new dry run.`);
-      console.log("");
-    }
-  }
-
   // ================================
   // ==== PROCESS SOURCE COMMITS ====
   // ================================
@@ -420,8 +408,7 @@ async function main() {
     }
 
     if (dryRun) {
-      dryRunLog.push(commitMessage);
-      console.warn(`[dry-run] ${commitMessage}`);
+      console.warn(`[dry-run] Created shadow commit: ${commitMessage}`);
     } else {
       createShadowCommit(shadowLogLines, commitMessage, commitAuthorDateSource);
       console.log(`Created shadow commit: ${commitMessage}`);

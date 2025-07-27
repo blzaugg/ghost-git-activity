@@ -52,7 +52,7 @@ cp config-sample.json config.json
 ## Usage
 
 ```bash
-# Simulate and preview the shadow commits (no changes made)
+# Simulate and preview the shadow commits (no commits made)
 node shadow.js --dry-run
 
 # Create shadow commits in the target repository
@@ -61,18 +61,8 @@ node shadow.js
 # Resume after a failed run (skips previously mirrored commits)
 node shadow.js --resume
 
-# Combine resume + dry-run
-node shadow.js --dry-run --resume
-
 # Print debug information
 node shadow.js --debug
-```
-
-## Output Example (`dry-run.log`)
-
-```
-a1b2c3d 2025-07-16T14:22:33+00:00 +15 -3 Alice Lastname
-f6e7g8h 2025-07-16T15:05:42+00:00 +3 -1 Alice Lastname
 ```
 
 ---
