@@ -214,59 +214,22 @@ function getShadowedShas() {
 }
 
 /**
- * Reads the shadow log file and returns its lines as an array.
+ * Overwrite the shadow log file the new SHA.
+ * @param {string} content The content to write to the shadow log file. 
  */
-function getShadowLogLines() {
+function updateShadowLogFile(content) {
   const shadowLogFilePath = path.join(config.repoPathTarget, FILENAME_SHADOW_LOG);
-
-  // If shadow log file does not exist, return empty array
-  if (!fs.existsSync(shadowLogFilePath)) {
-    return []
-  };
-
-  const shadowLog = fs.readFileSync(shadowLogFilePath, "utf8");
-  return shadowLog.split("\n");
-}
-
-/**
- * Retrieves the insertions & deletions diff stats from a commit in the source repository.
- *
- * @param {string} commitShaSource The short SHA of the commit to analyze.
- * @returns {Object} An object with `commitInsertions` and `commitDeletions` properties.
- */
-function getInsertionsDeletionsFromCommit(commitShaSource) {
-  const diffStat = runGit(config.repoPathSource, `show --shortstat --oneline ${commitShaSource} --`);
-
-  const insertionsMatch = diffStat.match(/(\d+) insertions?\(\+\)/);
-  const commitInsertions = insertionsMatch ? parseInt(insertionsMatch[1], 10) : 0;
-
-  const deletionsMatch = diffStat.match(/(\d+) deletions?\(-\)/);
-  const commitDeletions = deletionsMatch ? parseInt(deletionsMatch[1], 10) : 0;
-
-  return {
-    commitInsertions,
-    commitDeletions
-  };
-}
-
-/**
- * Overwrite the shadow log file in the target repository with the given lines.
- * @param {string[]} lines The lines to write to the shadow log file.
- */
-function writeLinesToShadowLogFile(lines) {
-  const shadowLogFilePath = path.join(config.repoPathTarget, FILENAME_SHADOW_LOG);
-  fs.writeFileSync(shadowLogFilePath, lines.join("\n"));
+  fs.writeFileSync(shadowLogFilePath, content);
 }
 
 /**
  * Creates a shadow commit in the target repository with the given commit message and date.
  *
- * @param {string[]} shadowLogLines The lines to write to the shadow log file.
  * @param {string} commitMessage The commit message to use for the shadow commit.
  * @param {string} commitAuthorDateSource The ISO date string to use for the commit author date.
  */
-function createShadowCommit(shadowLogLines, commitMessage, commitAuthorDateSource) {
-  writeLinesToShadowLogFile(shadowLogLines);
+function createShadowCommit(commitMessage, commitAuthorDateSource) {
+  updateShadowLogFile(commitMessage);
 
   // Stage Shadow Log File
   runGit(config.repoPathTarget, `add ${FILENAME_SHADOW_LOG}`);
@@ -339,13 +302,6 @@ async function main() {
     console.log("");
   }
 
-  let shadowLogLines = getShadowLogLines();
-
-  if (debug) {
-    console.log("DEBUG: Shadow log lines:", shadowLogLines.length);
-    console.log("");
-  }
-
   // ================================
   // ==== PROCESS SOURCE COMMITS ====
   // ================================
@@ -357,48 +313,13 @@ async function main() {
       continue;
     }
 
-    // ================================
-    // ==== SOURCE DIFF STAT ==========
-    // ================================
-
-    const { commitInsertions, commitDeletions } = getInsertionsDeletionsFromCommit(commitShaSource);
-
-    if (debug) {
-      console.log(`DEBUG: Commit data: +${commitInsertions} -${commitDeletions}`);
-      console.log("");
-    }
-
-    // Skip zero-diff commits
-    if (commitInsertions === 0 && commitDeletions === 0) {
-      console.log(`Skipping zero-diff commit: ${commitShaSource}`);
-      continue;
-    }
-
-    // Remove Shadow Log lines according to deletions count.
-    const shadowLogLinesToDelete = Math.min(commitDeletions, shadowLogLines.length);
-    shadowLogLines = shadowLogLines.slice(0, shadowLogLines.length - shadowLogLinesToDelete);
-
-    // Add Shadow Log lines according to insertions count. Use source SHA for variety.
-    const newLinesToPush = Array(commitInsertions).fill(commitShaSource);
-    shadowLogLines.push(...newLinesToPush)
-
-    if (debug) {
-      console.log(`DEBUG: Adjusted shadow log lines: ${shadowLogLines.length}`);
-      console.log("");
-    }
-
-    // ==================================
-    // ==== FORMAT & COMMIT =============
-    // ==================================
-
-    // "<original-sha> <ISO timestamp> +<insertions> -<deletions> <original author>"
-    // "89532a8 2024-09-30T19:40:22-07:00 +176 -2 alice.public@example.net"
-    const commitMessage = `${commitShaSource} ${commitAuthorDateSource} +${commitInsertions} -${commitDeletions} ${commitAuthorEmailSource}`;
+    // Example: "89532a8 2024-09-30T19:40:22-07:00 alice.public@example.net"
+    const commitMessage = `${commitShaSource} ${commitAuthorDateSource} ${commitAuthorEmailSource}`;
 
     if (dryRun) {
       console.warn(`[dry-run] Created shadow commit: ${commitMessage}`);
     } else {
-      createShadowCommit(shadowLogLines, commitMessage, commitAuthorDateSource);
+      createShadowCommit(commitMessage, commitAuthorDateSource);
       console.log(`Created shadow commit: ${commitMessage}`);
     }
   }

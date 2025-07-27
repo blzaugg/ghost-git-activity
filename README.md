@@ -14,17 +14,9 @@ It's mirrored activity with integrity.
 
 - Scans commits from a local source repository and branch.
 - Filters commits by a list of authors.
-- Creates matching shadow commits in a local target repository:
-  - Preserves original **timestamp**
-  - Matches **line insertions/deletions** into a single file (`shadow-activity.log`)
-  - All commits attributed to a single **author**
-  - Commit message format:
-    ```
-    <original-short-sha> <ISO timestamp> +<insertions> -<deletions> <original author>
-    ```
-- Skips:
-  - Zero-diff commits
-  - Commits by all other authors
+- Creates matching shadow commits in a local target repository
+- Records the original **SHA**, **Timestamp**, **Author Email**, via commit message
+- Modifies a single file, `shadow-activity.log`, to mimic commit activity.
 
 ## Installation & Setup
 
