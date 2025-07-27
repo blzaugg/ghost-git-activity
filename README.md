@@ -49,9 +49,6 @@ node shadow.js --dry-run
 # Create shadow commits in the target repository
 node shadow.js
 
-# Resume after a failed run (skips previously mirrored commits)
-node shadow.js --resume
-
 # Print debug information
 node shadow.js --debug
 ```
