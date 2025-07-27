@@ -172,7 +172,7 @@ function getCommitsDataFromRepoSource() {
   // short sha (%h), author email (%ae), ISO date (%aI)
   const prettyFormat = ["%h", "%ae", "%aI"].join(unitSeparatorGit);
 
-  const commitLog = runGit(config.repoPathSource, `log ${config.branchName} --no-merges --pretty=format:"${prettyFormat}"`);
+  const commitLog = runGit(config.repoPathSource, `log ${config.branchName} --reverse --pretty=format:"${prettyFormat}"`);
   const logLines = commitLog.trim().split("\n");
 
   if (debug) {

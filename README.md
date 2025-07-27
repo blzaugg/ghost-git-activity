@@ -23,7 +23,6 @@ It's mirrored activity with integrity.
     <original-short-sha> <ISO timestamp> +<insertions> -<deletions> <original author>
     ```
 - Skips:
-  - Merge commits
   - Zero-diff commits
   - Commits by all other authors
 
