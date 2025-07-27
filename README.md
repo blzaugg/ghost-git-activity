@@ -13,7 +13,7 @@ It's mirrored activity with integrity.
 
 ![Before & after screenshots of the GitHub Contribution Graph](./assets/before-and-after.png)
 
-# What Problem Is This Solving?
+## What Problem Is This Solving?
 
 I found it disappointing that when I contributed to a company repo on
 another hosting platform, or using a dedicated company GitHub account, those
@@ -24,7 +24,7 @@ actual output. But unconscious biases exist, and that graph does influence how
 people perceive your value as a developer.
 
 This project itself is proof enough that you cannot rely on the GitHub
-Contribution Graph to acuate represent development activity.
+Contribution Graph to accurately gauge development activity.
 
 ## What It Does
 
