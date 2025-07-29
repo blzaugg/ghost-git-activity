@@ -277,7 +277,6 @@ async function main() {
 
   if (debug) {
     console.log("DEBUG: Filtered commits data from repo source:", filteredCommitsDataFromRepoSource.length);
-    console.log("");
   }
 
   if (filteredCommitsDataFromRepoSource.length === 0) {
@@ -294,22 +293,18 @@ async function main() {
 
   if (debug) {
     console.log("DEBUG: Shadowed SHAs from target repo:", shadowedShas.size);
-
-    shadowedShas.forEach((shadowedSha) => {
-      console.log(`- shadowedSha: ${shadowedSha}`);
-    });
-
-    console.log("");
   }
 
   // ================================
   // ==== PROCESS SOURCE COMMITS ====
   // ================================
 
+  console.log(""); // Pre-loop padding
+
+  let newCommitsCount = 0;
   for (const { commitShaSource, commitAuthorEmailSource, commitAuthorDateSource } of filteredCommitsDataFromRepoSource) {
     if (shadowedShas.has(commitShaSource)) {
       console.warn(`Skipping already shadowed commit: ${commitShaSource}`);
-      console.log("");
       continue;
     }
 
@@ -322,10 +317,21 @@ async function main() {
       createShadowCommit(commitMessage, commitAuthorDateSource);
       console.log(`Created shadow commit: ${commitMessage}`);
     }
+
+    // Count new commits
+    newCommitsCount++;
   }
 
-  console.log("");
-  console.log("All commits processed.");
+  console.log(""); // Post-loop padding
+
+  console.log(filteredCommitsDataFromRepoSource.length, "source commits processed.");
+
+  if (dryRun) {
+    console.warn(`${dryRun && '[dry-run]'} ${newCommitsCount} new shadow commits created.`);
+  } else {
+    console.log(newCommitsCount, "new shadow commits created.");
+  }
+
   console.log("");
 }
 
